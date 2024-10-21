@@ -116,6 +116,7 @@ Simplest usage is of form:
  * {@link TypeResolverBuilder} implementation to limit possible types to instantiate,
  * (using {@link #setDefaultTyping}).
  */
+// Jackson 最常用的API就是基于对象绑定的ObjectMapper，它通过writeValue的系列方法将Java对象序列化为JSON，并且可以存储成不同的格式
 public class ObjectMapper
     extends ObjectCodec
     implements Versioned,
@@ -3102,6 +3103,7 @@ public class ObjectMapper
      * Method that can be used to serialize any Java value as
      * JSON output, using provided {@link JsonGenerator}.
      */
+    // 将对象存储成文件
     @Override
     public void writeValue(JsonGenerator g, Object value)
         throws IOException, JsonGenerationException, JsonMappingException
@@ -3733,6 +3735,7 @@ public class ObjectMapper
      *<p>
      * Note: prior to version 2.1, throws clause included {@link IOException}; 2.1 removed it.
      */
+    // 将对象存储成字符串
     public String writeValueAsString(Object value)
         throws JsonProcessingException
     {
@@ -3757,6 +3760,7 @@ public class ObjectMapper
      *<p>
      * Note: prior to version 2.1, throws clause included {@link IOException}; 2.1 removed it.
      */
+    // 将对象存储成字节数组
     public byte[] writeValueAsBytes(Object value)
         throws JsonProcessingException
     {
