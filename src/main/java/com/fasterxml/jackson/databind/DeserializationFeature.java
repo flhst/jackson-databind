@@ -16,6 +16,8 @@ import com.fasterxml.jackson.databind.cfg.ConfigFeature;
  * Note that features that do not indicate version of inclusion
  * were available in Jackson 2.0 (or earlier); only later additions
  * indicate version of inclusion.
+ *
+ * 反序列化特征
  */
 public enum DeserializationFeature implements ConfigFeature
 {
@@ -44,6 +46,8 @@ public enum DeserializationFeature implements ConfigFeature
      * point numbers will by default be deserialized as {@link Double}s
      * (choice is for performance reason -- BigDecimals are slower than
      * Doubles).
+     *
+     * 用于配置是否应将 JSON 中的浮点数反序列化为 BigDecimal 对象。默认禁用，因为 Double 类型通常能提供足够的精度，并且性能更好。
      */
     USE_BIG_DECIMAL_FOR_FLOATS(false),
 
@@ -62,6 +66,8 @@ public enum DeserializationFeature implements ConfigFeature
      * Feature is disabled by default, meaning that "untyped" integral
      * numbers will by default be deserialized using whatever
      * is the most compact integral type, to optimize efficiency.
+     *
+     * 用于配置是否应将 JSON 中的整数（非浮点数）反序列化为 BigInteger对象。默认禁用，未指定类型的整数默认将使用最紧凑的整数类型进行反序列化，以优化效率。
      */
     USE_BIG_INTEGER_FOR_INTS(false),
 
@@ -118,6 +124,12 @@ public enum DeserializationFeature implements ConfigFeature
      * Feature is enabled by default (meaning that a
      * {@link JsonMappingException} will be thrown if an unknown property
      * is encountered).
+     *
+     * 用于配置在反序列化过程中遇到未知属性
+     * （即那些没有对应属性来映射的属性，且没有任何setter或handler可以处理这样的属性）时，应该如何处理。
+     * 默认启用，如果在JSON中存在无法映射到目标Java对象的属性，
+     * 将抛出一个异常，指示反序列化失败。
+     * 这样的设计可以帮助开发者及时捕获到数据模型与JSON结构之间的不匹配，从而进行修复。
      */
     FAIL_ON_UNKNOWN_PROPERTIES(true),
 
@@ -129,6 +141,9 @@ public enum DeserializationFeature implements ConfigFeature
      * (0 for 'int', 0.0 for double, same defaulting as what JVM uses).
      *<p>
      * Feature is disabled by default.
+     *
+     *
+     * 用于配置将 JSON 中的 null 值反序列化为 Java 基本类型（如 int, boolean, double 等）时是否抛出异常。
      */
     FAIL_ON_NULL_FOR_PRIMITIVES(false),
 
@@ -143,6 +158,9 @@ public enum DeserializationFeature implements ConfigFeature
      * are always serialized as JSON Strings)
      *<p>
      * Feature is disabled by default.
+     *
+     *
+     * 用于配置是否允许将 JSON 整数数字作为 Java 枚举值进行反序列化。
      */
     FAIL_ON_NUMBERS_FOR_ENUMS(false),
 
@@ -156,6 +174,8 @@ public enum DeserializationFeature implements ConfigFeature
      * type information.
      * 
      * @since 2.2
+     *
+     * 用于配置在反序列化过程中遇到无效的子类型时，是否抛出异常
      */
     FAIL_ON_INVALID_SUBTYPE(true),
 
@@ -173,6 +193,8 @@ public enum DeserializationFeature implements ConfigFeature
      * Feature is disabled by default so that no exception is thrown.
      * 
      * @since 2.3
+     *
+     * 用于配置在解析JSON时遇到重复的键值对时，是否抛出异常
      */
     FAIL_ON_READING_DUP_TREE_KEY(false),
 
@@ -184,6 +206,10 @@ public enum DeserializationFeature implements ConfigFeature
      * Feature is disabled by default so that no exception is thrown.
      *
      * @since 2.3
+     *
+     *
+     * 这个枚举常量通常用于配置某个类的行为，具体来说，当设置为 false 时，
+     * 表示在处理 JSON 数据时忽略未映射的属性不会抛出异常。
      */
     FAIL_ON_IGNORED_PROPERTIES(false),
 
@@ -200,6 +226,9 @@ public enum DeserializationFeature implements ConfigFeature
      * exception being thrown, at the end of deserialization.
      * 
      * @since 2.5
+     *
+     *
+     * 用于配置在反序列化过程中遇到无法解析的对象ID时，是否抛出异常。
      */
     FAIL_ON_UNRESOLVED_OBJECT_IDS(true),
 
@@ -221,6 +250,8 @@ public enum DeserializationFeature implements ConfigFeature
      * property values, unless they are explicitly marked as `required`.
      * 
      * @since 2.6
+     *
+     * 用于配置某个类的行为，具体来说，当设置为 false 时，表示在处理 JSON 数据时，如果缺少构造函数所需的属性，不会抛出异常。
      */
     FAIL_ON_MISSING_CREATOR_PROPERTIES(false),
 
@@ -234,6 +265,8 @@ public enum DeserializationFeature implements ConfigFeature
       * property values, unless they are explicitly marked as `required`.
       *
       * @since 2.8
+     *
+     * 当设置为 false 时，表示在处理 JSON 数据时，如果构造函数所需的属性为 null，不会抛出异常。
       */
     FAIL_ON_NULL_CREATOR_PROPERTIES(false),
 
@@ -323,6 +356,8 @@ public enum DeserializationFeature implements ConfigFeature
      * 
      * Feature is disabled by default.
      * @since 2.4
+     *
+     * 用于配置是否允许单个值反序列化为数组。
      */
     UNWRAP_SINGLE_VALUE_ARRAYS(false),
 
@@ -335,6 +370,9 @@ public enum DeserializationFeature implements ConfigFeature
      * will be deserialized as if it was the root value.
      *<p>
      * Feature is disabled by default.
+     *
+     * 用于处理 JSON 数组中只包含一个单独值的情况。当启用这个选项时，会在反序列化过程中自动“拆包”只包含一个元素的数组，
+     * 将其直接映射到目标对象的属性上，而不是将该元素作为数组的一部分。
      */
     UNWRAP_ROOT_VALUE(false),
 
@@ -359,6 +397,11 @@ public enum DeserializationFeature implements ConfigFeature
      * {@link MapperFeature#ALLOW_COERCION_OF_SCALARS}.
      *<p>
      * Feature is disabled by default.
+     *
+     *
+     * 用于配置是否允许将空字符串值（""）反序列化为null。
+     * 这里只支持属性类型为POJO、Map、Collection对象，
+     * 如果是String类型则还是空字符串值。
      */
     ACCEPT_EMPTY_STRING_AS_NULL_OBJECT(false),
 
@@ -375,6 +418,8 @@ public enum DeserializationFeature implements ConfigFeature
      * Feature is disabled by default.
      * 
      * @since 2.5
+     *
+     * 用于配置是否允许将空数组([])反序列化为 null ，和上面的类似。
      */
     ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT(false),
 
@@ -389,6 +434,8 @@ public enum DeserializationFeature implements ConfigFeature
      * Feature is enabled by default.
      * 
      * @since 2.6
+     *
+     * 是否允许将浮点类型反序列化为 int类型 。
      */
     ACCEPT_FLOAT_AS_INT(true),
 

@@ -12,6 +12,8 @@ import com.fasterxml.jackson.databind.cfg.ConfigFeature;
  * In first case these defaults must follow "config-then-use" patterns
  * (i.e. defined once, not changed afterwards); all per-call
  * changes must be done using {@link ObjectWriter}.
+ *
+ * 序列化特征
  */
 public enum SerializationFeature implements ConfigFeature
 {

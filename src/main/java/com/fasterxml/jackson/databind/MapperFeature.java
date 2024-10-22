@@ -13,6 +13,8 @@ import com.fasterxml.jackson.databind.cfg.ConfigFeature;
  * changes only take effect when done <b>before any serialization or
  * deserialization</b> calls -- that is, caller must follow
  * "configure-then-use" pattern.
+ *
+ * 映射特征
  */
 public enum MapperFeature implements ConfigFeature
 {
